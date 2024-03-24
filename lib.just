@@ -1,5 +1,3 @@
-jpg_user := "zarkli"
-
 # If you want to change the following settings, either edit the ~/.jpg.config file
 # or export these corresponding environment variables
 
@@ -16,8 +14,8 @@ JPG_V_USER_EMAIL := env("JPG_V_EMAIL", `git config user.email`)
 JPG_RS_PATH_ROOT_DIR := "@[[jpg.path.root_dir]]" # project root directory
 JPG_RS_PATH_FILE_NAME := "@[[jpg.path.filename]]"
 JPG_RS_PATH_FILE_NAME_ABS := "@[[jpg.path.filename#abs]]"
-JPG_RS_PATH_BASE_FILE_NAME := "@[[jpg.path.basefilename]]" # current filename basename, i.e. README.typ
-JPG_RS_PATH_BASE_FILE_NAME_NO_EXT := "@[[jpg.path.basefilename_noext]]" # current filename basename without extension (i.e. README)
+JPG_RS_PATH_BASE_FILE_NAME := "@[[jpg.path.basefilename]]" # current filename basename, e.g. README.typ
+JPG_RS_PATH_BASE_FILE_NAME_NO_EXT := "@[[jpg.path.basefilename_noext]]" # current filename basename without extension (e.g. README)
 JPG_RS_PATH_PARENT_DIR := "@[[jpg.path.parent_dir]]"
 JPG_RS_PATH_PARENT_DIR_ABS := "@[[jpg.path.parent_dir#abs]]"
 
