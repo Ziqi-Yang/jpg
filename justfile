@@ -4,10 +4,8 @@ import 'jpg.just'
     echo All the dependencies are optional. But some helper command of jpg use these \
       dependencies.
     echo ======================================
-    -type sd
     -type fd
     echo ======================================
-    echo sd - https://github.com/chmln/sd
     echo fd - https://github.com/sharkdp/fd
 
 intall_completion:
@@ -19,8 +17,5 @@ install: && _check-deps
 test: && (jpg-replace-basic "test")
     rm -rf ./test
     cp -r ./test_template ./test
-    
-
-    
     
 
