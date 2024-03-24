@@ -1,7 +1,7 @@
-import 'mpm.just'
+import 'jpg.just'
 
 @_check-deps:
-    echo All the dependencies are optional. But some helper command of mpm use these \
+    echo All the dependencies are optional. But some helper command of jpg use these \
       dependencies.
     echo ======================================
     -type sd
@@ -12,11 +12,11 @@ import 'mpm.just'
 
 intall_completion:
 
-# Install mpm
+# Install jpg
 install: && _check-deps
     #TODO
 
-test: && (mpm-replace-basic "test")
+test: && (jpg-replace-basic "test")
     rm -rf ./test
     cp -r ./test_template ./test
     

@@ -1,49 +1,49 @@
-mpm_user := "zarkli"
+jpg_user := "zarkli"
 
-# If you want to change the following settings, either edit the ~/.mpm.config file
+# If you want to change the following settings, either edit the ~/.jpg.config file
 # or export these corresponding environment variables
 
 # Since fd interpret '{{' as '{', we'd better use '[[' for templating
 # Static Slot
-MPM_S_USER_NAME :="@[[mpm.user.name]]"
-MPM_S_USER_EMAIL := "@[[mpm.user.email]]"
+JPG_S_USER_NAME :="@[[jpg.user.name]]"
+JPG_S_USER_EMAIL := "@[[jpg.user.email]]"
 
 # Value for static slot
-MPM_V_USER_NAME := env("MPM_V_USER", `git config user.name`)
-MPM_V_USER_EMAIL := env("MPM_V_EMAIL", `git config user.email`)
+JPG_V_USER_NAME := env("JPG_V_USER", `git config user.name`)
+JPG_V_USER_EMAIL := env("JPG_V_EMAIL", `git config user.email`)
 
 # Runtime Slot - Value assigned at Runtime ==================================
-MPM_RS_PATH_ROOT_DIR := "@[[mpm.path.root_dir]]" # project root directory
-MPM_RS_PATH_FILE_NAME := "@[[mpm.path.filename]]"
-MPM_RS_PATH_FILE_NAME_ABS := "@[[mpm.path.filename#abs]]"
-MPM_RS_PATH_BASE_FILE_NAME := "@[[mpm.path.basefilename]]" # current filename basename, i.e. README.typ
-MPM_RS_PATH_BASE_FILE_NAME_NO_EXT := "@[[mpm.path.basefilename_noext]]" # current filename basename without extension (i.e. README)
-MPM_RS_PATH_PARENT_DIR := "@[[mpm.path.parent_dir]]"
-MPM_RS_PATH_PARENT_DIR_ABS := "@[[mpm.path.parent_dir#abs]]"
+JPG_RS_PATH_ROOT_DIR := "@[[jpg.path.root_dir]]" # project root directory
+JPG_RS_PATH_FILE_NAME := "@[[jpg.path.filename]]"
+JPG_RS_PATH_FILE_NAME_ABS := "@[[jpg.path.filename#abs]]"
+JPG_RS_PATH_BASE_FILE_NAME := "@[[jpg.path.basefilename]]" # current filename basename, i.e. README.typ
+JPG_RS_PATH_BASE_FILE_NAME_NO_EXT := "@[[jpg.path.basefilename_noext]]" # current filename basename without extension (i.e. README)
+JPG_RS_PATH_PARENT_DIR := "@[[jpg.path.parent_dir]]"
+JPG_RS_PATH_PARENT_DIR_ABS := "@[[jpg.path.parent_dir#abs]]"
 
 
-# @[[mpm.user.name]]
-# @[[mpm.user.email]]
-# @[[mpm.path.filename]]
-# @[[mpm.path.filename#abs]]
-# @[[mpm.path.root_dir]]
-# @[[mpm.path.basefilename]]
-# @[[mpm.path.basefilename_noext]]
-# @[[mpm.path.parent_dir]]
-# @[[mpm.path.parent_dir#abs]]
+# @[[jpg.user.name]]
+# @[[jpg.user.email]]
+# @[[jpg.path.filename]]
+# @[[jpg.path.filename#abs]]
+# @[[jpg.path.root_dir]]
+# @[[jpg.path.basefilename]]
+# @[[jpg.path.basefilename_noext]]
+# @[[jpg.path.parent_dir]]
+# @[[jpg.path.parent_dir#abs]]
 
 # make a DIR directory and run `git init` at DIR
 [private]
-mpm-create-git-proj dir: (mpm-create-dir dir) (mpm-git-init dir)
+jpg-create-git-proj dir: (jpg-create-dir dir) (jpg-git-init dir)
 
 # create DIR
 [private]
-mpm-create-dir dir:
+jpg-create-dir dir:
     @mkdir -p {{dir}}
 
 # run `git init` at DIR
 [private]
-mpm-git-init dir:
+jpg-git-init dir:
     @git -C {{dir}} init
 
 [private]
@@ -52,29 +52,29 @@ mpm-git-init dir:
 
 # copy template
 [private]
-mpm-copy-template template-name:
+jpg-copy-template template-name:
     # TODO
 
 # replace basic 
 [private]
-mpm-replace-basic dir:
+jpg-replace-basic dir:
     #!/usr/bin/env sh
     set -eu
     cd '{{dir}}'      
-    mpm__path__root_dir=$(pwd)
+    jpg__path__root_dir=$(pwd)
     # replace static slots
     fd -a -t f -x sh -c "
-      sd -F '{{MPM_S_USER_NAME}}' '{{MPM_V_USER_NAME}}' '{}'
-      sd -F '{{MPM_S_USER_EMAIL}}' '{{MPM_V_USER_EMAIL}}' '{}'
+      sd -F '{{JPG_S_USER_NAME}}' '{{JPG_V_USER_NAME}}' '{}'
+      sd -F '{{JPG_S_USER_EMAIL}}' '{{JPG_V_USER_EMAIL}}' '{}'
       
-      MPM_RS_PATH_FILE_NAME_REL=\$(realpath -s --relative-base=${mpm__path__root_dir} '{}')
-      MPM_RS_PATH_PARENT_DIR_REL=\$(realpath -s --relative-base=${mpm__path__root_dir} '{//}')
-      sd -F '{{MPM_RS_PATH_ROOT_DIR}}' '${mpm__path__root_dir}' '{}'
-      sd -F '{{MPM_RS_PATH_FILE_NAME}}' \${MPM_RS_PATH_FILE_NAME_REL} '{}'
-      sd -F '{{MPM_RS_PATH_FILE_NAME_ABS}}' '{}' '{}'
-      sd -F '{{MPM_RS_PATH_BASE_FILE_NAME}}' '{/}' '{}'
-      sd -F '{{MPM_RS_PATH_BASE_FILE_NAME_NO_EXT}}' '{/.}' '{}'
-      sd -F '{{MPM_RS_PATH_PARENT_DIR}}' \${MPM_RS_PATH_PARENT_DIR_REL} '{}'
-      sd -F '{{MPM_RS_PATH_PARENT_DIR_ABS}}' '{//}' '{}'
+      JPG_RS_PATH_FILE_NAME_REL=\$(realpath -s --relative-base=${jpg__path__root_dir} '{}')
+      JPG_RS_PATH_PARENT_DIR_REL=\$(realpath -s --relative-base=${jpg__path__root_dir} '{//}')
+      sd -F '{{JPG_RS_PATH_ROOT_DIR}}' '${jpg__path__root_dir}' '{}'
+      sd -F '{{JPG_RS_PATH_FILE_NAME}}' \${JPG_RS_PATH_FILE_NAME_REL} '{}'
+      sd -F '{{JPG_RS_PATH_FILE_NAME_ABS}}' '{}' '{}'
+      sd -F '{{JPG_RS_PATH_BASE_FILE_NAME}}' '{/}' '{}'
+      sd -F '{{JPG_RS_PATH_BASE_FILE_NAME_NO_EXT}}' '{/.}' '{}'
+      sd -F '{{JPG_RS_PATH_PARENT_DIR}}' \${JPG_RS_PATH_PARENT_DIR_REL} '{}'
+      sd -F '{{JPG_RS_PATH_PARENT_DIR_ABS}}' '{//}' '{}'
     "
     
