@@ -17,11 +17,14 @@ JPG_USER_CONFIG_FILE_PATH := join(JPG_CONFIG_DIR, "config")
     echo fd - https://github.com/sharkdp/fd
 
 [private]
-make_directories:
+create_example_user_configuration:
     #!/usr/bin/env sh
     set -eu
-    echo "[*] Make Directories & Files"
-    mkdir -p {{JPG_TEMPLATES_DIR}}
+    echo "[*] Create Example User Configuration"
+    if [ ! -d '{{JPG_TEMPLATES_DIR}}' ]; then
+      mkdir -p {{JPG_TEMPLATES_DIR}}
+      cp -r ./example/template '{{JPG_CONFIG_DIR}}'
+    fi
     
     # touch intermediate file, which imports the actual user configurations
     cat > ~/.jpg.root.just<< EOF
@@ -31,9 +34,11 @@ make_directories:
 
     if [ ! -f '{{JPG_USER_SCRIPT_FILE_PATH}}' ]; then
     cat > '{{JPG_USER_SCRIPT_FILE_PATH}}'<< EOF
-    # your configuration file path (format is the same as `.env` file format)
+    # your configuration file path (format is the same as '.env' file format)
     set dotenv-path := '{{JPG_USER_CONFIG_FILE_PATH}}'
+    
     EOF
+    cat ./example/script.just >> '{{JPG_USER_SCRIPT_FILE_PATH}}'
     fi
 
     # touch user configuration file
@@ -43,9 +48,22 @@ make_directories:
 [private]
 intall_completion:
 
-# Install jpg
-install: make_directories && check-deps
-    #TODO
+# similar to `make install` 
+PREFIX := env("PREFIX", "/usr")
+BIN_DIR := join(PREFIX, "bin")
+INSTALL_DIR := join(PREFIX, "lib/jpg")
+INSTALL_EXAMPLE_DIR := join(INSTALL_DIR, "example")
+
+install: create_example_user_configuration && check-deps
+    install -d '{{INSTALL_DIR}}'
+    install -d '{{INSTALL_EXAMPLE_DIR}}'
+    install -Dm755 ./jpg '{{INSTALL_DIR}}'
+    install -Dm644 ./*.just '{{INSTALL_DIR}}'
+    install -Dm644 ./LICENSE '{{INSTALL_DIR}}'
+    cp -r ./example/* '{{INSTALL_EXAMPLE_DIR}}'
+    # see issue: https://github.com/casey/just/issues/1977
+    # ln -sf '{{join(INSTALL_DIR, "jpg")}}' '{{join(BIN_DIR, "jpg")}}'
+    install -Dm755 ./jpg.sh {{join(BIN_DIR, "jpg")}}
 
 # Run test
 test: && (jpg-replace-builtin "test")
