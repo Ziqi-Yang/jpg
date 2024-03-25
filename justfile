@@ -16,8 +16,10 @@ JPG_USER_CONFIG_FILE_PATH := join(JPG_CONFIG_DIR, "config")
     echo --------------------------------------
     echo fd - https://github.com/sharkdp/fd
 
-[private]
-create_example_user_configuration:
+# we needs to separate it with the `install` command since the permission of file is changed
+# to the root user when using sudo
+
+create-example-user-configuration:
     #!/usr/bin/env sh
     set -eu
     echo "[*] Create Example User Configuration"
@@ -54,7 +56,11 @@ BIN_DIR := join(PREFIX, "bin")
 INSTALL_DIR := join(PREFIX, "lib/jpg")
 INSTALL_EXAMPLE_DIR := join(INSTALL_DIR, "example")
 
-install: create_example_user_configuration && check-deps
+# TODO provide local install an uninstall
+
+# `sudo --preserve-env just install` so that home directory can be correctly set
+# Install JPG
+install: && check-deps
     install -d '{{INSTALL_DIR}}'
     install -d '{{INSTALL_EXAMPLE_DIR}}'
     install -Dm755 ./jpg '{{INSTALL_DIR}}'
@@ -63,7 +69,13 @@ install: create_example_user_configuration && check-deps
     cp -r ./example/* '{{INSTALL_EXAMPLE_DIR}}'
     # see issue: https://github.com/casey/just/issues/1977
     # ln -sf '{{join(INSTALL_DIR, "jpg")}}' '{{join(BIN_DIR, "jpg")}}'
-    install -Dm755 ./jpg.sh {{join(BIN_DIR, "jpg")}}
+    install -Dm755 ./jpg.sh '{{join(BIN_DIR, "jpg")}}'
+
+# uninstall JPG
+uninstall:
+    read -p "You will uninstall the JPG program at directory '{{INSTALL_DIR}}' [ENTER]"
+    rm -rf '{{INSTALL_DIR}}'
+    rm '{{join(BIN_DIR, "jpg")}}'
 
 # Run test
 test: && (jpg-replace-builtin "test")

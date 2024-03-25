@@ -1,26 +1,29 @@
 # Helper Functions provided for user
 
+# NOTE Currently we needs to put `no-cd` attribute for all the recipes:
+#  See https://github.com/casey/just/issues/1978
+
 # make a DIR directory and run `git init` at DIR
-[private]
+[private, no-cd]
 jpg-create-git-proj dir: (jpg-create-dir dir) (jpg-git-init dir)
 
 # create DIR
-[private]
+[private, no-cd]
 jpg-create-dir dir:
     @mkdir -p {{dir}}
 
 # run `git init` at DIR
-[private]
+[private, no-cd]
 jpg-git-init dir:
     @git -C {{dir}} init
 
 # copy template
-[private]
+[private, no-cd]
 jpg-copy-template name template-name:
     cp -r '{{join(JPG_TEMPLATES_DIR, template-name)}}' '{{name}}'
 
 # replace basic 
-[private]
+[private, no-cd]
 jpg-replace-builtin dir:
     #!/usr/bin/env sh
     set -eu
