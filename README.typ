@@ -1,3 +1,4 @@
+
 = Just a Project Generator
 
 *Alpha State*
@@ -38,8 +39,8 @@ jpg python test
 
 == Override Options
 
-You can see the full list of JPG variables using command `jpg config`. A list of customizable variables can be viewed using
-command `jpg config 1`.
+You can see the full list of JPG variables using command `jpg config -a`. Other options for `jpg config` can be viewed by command `jpg` or
+`jpg help`  
 You can customize it in a file called `config` (if you use example configuration) at your JPG user configuration directory. This
 file follows the style of `.env` file. Here is an example:
 ```
