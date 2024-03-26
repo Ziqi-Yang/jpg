@@ -16,5 +16,13 @@ import 'template_var.just'
 # https://github.com/casey/just/issues/1975
 import? "~/.jpg.root.just"
 
-@_:
+_JPG_VERSION := "0.1.0"
+
+# Display help information
+@help:
     {{justfile()}} -l
+
+# Display version information
+@version:
+    echo '{{_JPG_VERSION}}'
+    

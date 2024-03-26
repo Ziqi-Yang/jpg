@@ -17,12 +17,12 @@ jpg-create-dir dir:
 jpg-git-init dir:
     @git -C {{dir}} init
 
-# copy template
+# copy template TEMPLATE_NAME from 'JPG_TEMPLATES_DIR' to DIR directory
 [private, no-cd]
-jpg-copy-template name template-name:
-    cp -r '{{join(JPG_TEMPLATES_DIR, template-name)}}' '{{name}}'
+jpg-copy-template dir template-name:
+    cp -r '{{join(JPG_TEMPLATES_DIR, template-name)}}' '{{dir}}'
 
-# replace basic 
+# replace JPG's builtin variables for all files indie DIR
 [private, no-cd]
 jpg-replace-builtin dir:
     #!/usr/bin/env sh

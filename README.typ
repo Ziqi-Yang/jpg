@@ -1,12 +1,75 @@
 = Just a Project Generator
 
+*Alpha State*
+
 A project generator using #link("https://github.com/casey/just?tab=readme-ov-file#just-scripts")[just]
 
-*WIP*
+To use this tool, you may need the knowledge of #link("https://github.com/casey/just?tab=readme-ov-file#just-scripts")[just]
+and shell script (However, `just` let you run script using many other languages).
+
+== Features
+
+1. fully customizable
+2. ridiculously simple
+3. shell completion support
+4. use languages and tools you like
 
 == Installation
 
+```bash
+git clone https://github.com/Ziqi-Yang/jpg
+cd jpg
+sudo just install
+just create-example-user-configuration
+```
+
+You can execute command `sudo just uninstall` to fully uninstall JPG.
+
+== Quick Run
+
+After running `just create-example-user-configuration` at the _Installation_ step, you have example configuration at the
+`jpg` folder at the user-specific configuration directory (for Linux, normally it's `~/.config`). Take a look at the files inside it
+and run the following command to see the effect.
+```bash
+cd /tmp
+# using python template (example template) to create a project named `test`
+jpg python test
+```
+
+== Override Options
+
+You can see the full list of JPG variables using command `jpg config`. A list of customizable variables can be viewed using
+command `jpg config 1`.
+You can customize it in a file called `config` (if you use example configuration) at your JPG user configuration directory. This
+file follows the style of `.env` file. Here is an example:
+```
+JPG_V_USER_NAME="Meow King"
+```
+
+== Create your project templates
+
+Create your template inside `JPG_TEMPLATES_DIR` directory(by default, it's the `template` directory under your JPG user configuration directory).
+
+Also take a look at the example `script.just` file at your JPG user configuration directory. You can utilize builtin
+functions defined defined in #link("./lib.just")[lib.just] file.
+
+== Utility Tools
+
+- #link("https://github.com/sharkdp/fd")[fd]
+- #link("https://github.com/chmln/sd")[sd]
+- #link("https://github.com/BurntSushi/ripgrep")[ripgrep]
+
 == FAQ
+
+=== How can I create template and share it with others?
+
++ Upload your template to an online open source project hosting service.
++ Share your corresponding `just` recipe. \
+  Example recipe:
+  ```just
+  python name: && (jpg-replace-builtin name)
+      git clone https://github.com/Ziqi-Yang/jpg.git
+  ```
 
 === Why JPG uses `::variable_name::` as its builtin template style, instead of something like `{{variable_name}}`?
 

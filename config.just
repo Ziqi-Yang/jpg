@@ -13,6 +13,13 @@ JPG_V_USER_NAME := env("JPG_V_USER", `git config user.name || echo ""`)
 JPG_V_USER_EMAIL := env("JPG_V_EMAIL", `git config user.email || echo ""`)
 
 # Display configuration information
-@config:
-    printenv | grep "JPG_" | sort
+config *customizable:
+    #!/usr/bin/env sh
+    set -eu
+    if [ -n '{{customizable}}' ]; then
+      # JPG_CONFIG_DIR is currently not customizable
+      printenv | grep -P "^JPG_(?!S_|RS_|CONFIG_DIR).*" | sort
+    else
+      printenv | grep "^JPG_" | sort
+    fi
 

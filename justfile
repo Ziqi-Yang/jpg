@@ -1,7 +1,19 @@
 import 'jpg'
 
+set ignore-comments
+
 JPG_USER_SCRIPT_FILE_PATH := join(JPG_CONFIG_DIR, "script.just")
 JPG_USER_CONFIG_FILE_PATH := join(JPG_CONFIG_DIR, "config")
+
+# similar to `make install` 
+PREFIX := env("PREFIX", "/")
+BIN_DIR := join(PREFIX, "usr/bin")
+INSTALL_DIR := join(PREFIX, "usr/lib/jpg")
+INSTALL_EXAMPLE_DIR := join(INSTALL_DIR, "example")
+
+BASH_COMPLETION_DIR := env("BASH_COMPLETION_DIR", join(PREFIX, "usr/share/bash-completion/completions"))
+ZSH_COMPLETION_DIR := env("ZSH_COMPLETION_DIR", join(PREFIX, "usr/share/zsh/site-functions"))
+FISH_COMPLETION_DIR := env("FISH_COMPLETION_DIR", join(PREFIX, "usr/share/fish/vendor_completions.d"))
 
 [private]
 @__help:
@@ -9,7 +21,9 @@ JPG_USER_CONFIG_FILE_PATH := join(JPG_CONFIG_DIR, "config")
 
 [private]
 @check-deps:
-    echo All the dependencies are optional. But some helper command of jpg use these \
+    echo
+    echo [*] Check Dependency
+    echo All the dependencies are optional. But some helper commands of jpg use these \
       dependencies.
     echo --------------------------------------
     -type fd
@@ -46,21 +60,26 @@ create-example-user-configuration:
     # touch user configuration file
     touch '{{JPG_USER_CONFIG_FILE_PATH}}'
 
+install_completion:
+    @echo
+    @echo "[*] Install shell completion files"
+    install -Dm644 'completions/jpg.zsh' '{{join(ZSH_COMPLETION_DIR, "_jpg")}}'
+    install -Dm644 'completions/jpg.bash' '{{join(BASH_COMPLETION_DIR, "jpg")}}'
+    install -Dm644 'completions/jpg.fish' '{{join(FISH_COMPLETION_DIR, "jpg.fish")}}'
 
-[private]
-intall_completion:
+uninstall_completion:
+    @echo
+    @echo "[*] Uninstall shell completion files"
+    rm -f '{{join(ZSH_COMPLETION_DIR, "_jpg")}}'
+    rm -f '{{join(BASH_COMPLETION_DIR, "jpg")}}'
+    rm -f '{{join(FISH_COMPLETION_DIR, "jpg.fish")}}'
 
-# similar to `make install` 
-PREFIX := env("PREFIX", "/usr")
-BIN_DIR := join(PREFIX, "bin")
-INSTALL_DIR := join(PREFIX, "lib/jpg")
-INSTALL_EXAMPLE_DIR := join(INSTALL_DIR, "example")
 
 # TODO provide local install an uninstall
 
-# `sudo --preserve-env just install` so that home directory can be correctly set
 # Install JPG
-install: && check-deps
+install: && install_completion check-deps
+    @echo '[*] Installing JPG'
     install -d '{{INSTALL_DIR}}'
     install -d '{{INSTALL_EXAMPLE_DIR}}'
     install -Dm755 ./jpg '{{INSTALL_DIR}}'
@@ -72,10 +91,11 @@ install: && check-deps
     install -Dm755 ./jpg.sh '{{join(BIN_DIR, "jpg")}}'
 
 # uninstall JPG
-uninstall:
-    read -p "You will uninstall the JPG program at directory '{{INSTALL_DIR}}' [ENTER]"
+uninstall: && uninstall_completion
+    @echo '[*] Uninstalling JPG'
+    @read -p "You will uninstall the JPG program at directory '{{INSTALL_DIR}}' [ENTER/Ctrl+C]"
     rm -rf '{{INSTALL_DIR}}'
-    rm '{{join(BIN_DIR, "jpg")}}'
+    rm -f '{{join(BIN_DIR, "jpg")}}'
 
 # Run test
 test: && (jpg-replace-builtin "test")
