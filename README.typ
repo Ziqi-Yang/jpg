@@ -2,9 +2,9 @@
 
 *Alpha State*
 
-A project generator using #link("https://github.com/casey/just?tab=readme-ov-file#just-scripts")[just]
+A project generator using #link("https://github.com/casey/just")[just]
 
-To use this tool, you may need the knowledge of #link("https://github.com/casey/just?tab=readme-ov-file#just-scripts")[just]
+To use this tool, you may need the knowledge of #link("https://github.com/casey/just")[just]
 and shell script (However, `just` let you run script using many other languages).
 
 == Features
