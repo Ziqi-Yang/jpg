@@ -68,7 +68,7 @@ functions defined defined in #link("./lib.just")[lib.just] file.
   Example recipe:
   ```just
   python name: && (jpg-replace-builtin name)
-      git clone https://github.com/Ziqi-Yang/jpg.git
+      git clone https://github.com/Ziqi-Yang/jpg.git name
   ```
 
 === Why JPG uses `::variable_name::` as its builtin template style, instead of something like `{{variable_name}}`?
