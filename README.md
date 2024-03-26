@@ -2,13 +2,11 @@
 
 **Alpha State**
 
-A project generator using
-[just](https://github.com/casey/just?tab=readme-ov-file#just-scripts)
+A project generator using [just](https://github.com/casey/just)
 
 To use this tool, you may need the knowledge of
-[just](https://github.com/casey/just?tab=readme-ov-file#just-scripts)
-and shell script (However, `just` let you run script using many other
-languages).
+[just](https://github.com/casey/just) and shell script (However, `just`
+let you run script using many other languages).
 
 ## Features
 
@@ -85,7 +83,7 @@ defined in [lib.just](./lib.just) file.
 
     ``` just
     python name: && (jpg-replace-builtin name)
-         git clone https://github.com/Ziqi-Yang/jpg.git
+         git clone https://github.com/Ziqi-Yang/jpg.git name
      
     ```
 
