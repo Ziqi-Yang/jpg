@@ -41,7 +41,8 @@ command to see the effect.
 
 ``` bash
 cd /tmp
-just python test
+# using python template (example template) to create a project named `test`
+jpg python test
 ```
 
 ## Override Options
