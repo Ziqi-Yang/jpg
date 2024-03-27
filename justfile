@@ -2,7 +2,7 @@ import 'jpg'
 
 set ignore-comments
 
-JPG_USER_SCRIPT_FILE_PATH := join(JPG_CONFIG_DIR, "script.just")
+JPG_USER_SCRIPT_FILE_PATH := join(JPG_CONFIG_DIR, "main.just")
 JPG_USER_CONFIG_FILE_PATH := join(JPG_CONFIG_DIR, "config")
 
 # similar to `make install` 
@@ -54,7 +54,7 @@ create-example-user-configuration:
     set dotenv-path := '{{JPG_USER_CONFIG_FILE_PATH}}'
     
     EOF
-    cat ./example/script.just >> '{{JPG_USER_SCRIPT_FILE_PATH}}'
+    cat ./example/main.just >> '{{JPG_USER_SCRIPT_FILE_PATH}}'
     fi
 
     # touch user configuration file

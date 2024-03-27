@@ -57,7 +57,7 @@ JPG_V_USER_NAME="Meow King"
 
 Create your template inside `JPG_TEMPLATES_DIR` directory(by default, it's the `template` directory under your JPG user configuration directory).
 
-Also take a look at the example `script.just` file at your JPG user configuration directory. You can utilize builtin
+Also take a look at the example `main.just` file at your JPG user configuration directory. You can utilize builtin
 functions defined defined in #link("./lib.just")[lib.just] file.
 
 == Utility Tools
@@ -89,7 +89,7 @@ If you write your justfile recipe in languages like `python`, `golang`, etc. You
 
 === I don't want to store my secret in `~/.config/jpg/config` file. Where should I store my secret?
 Suppose you have make a git repo for synchronize your templates. Since `config` file is also used to change the values of JPG variables, it's not recommended to store your secrets. There are possibly two approaches:
-+ create another justfile to store your secrets into variables, import the justfile in your `script.just` and put the filename into your `.gitignore`.
++ create another justfile to store your secrets into variables, import the justfile in your `main.just` and put the filename into your `.gitignore`.
 + Store it in another environment file. In your related justfile recipes, write this: \
     ```just
     a:

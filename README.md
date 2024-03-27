@@ -80,7 +80,7 @@ Create your template inside `JPG_TEMPLATES_DIR` directory(by default,
 it's the `template` directory under your JPG user configuration
 directory).
 
-Also take a look at the example `script.just` file at your JPG user
+Also take a look at the example `main.just` file at your JPG user
 configuration directory. You can utilize builtin functions defined
 defined in [lib.just](./lib.just) file.
 
@@ -138,7 +138,7 @@ not recommended to store your secrets. There are possibly two
 approaches:
 
 1.  create another justfile to store your secrets into variables, import
-    the justfile in your `script.just` and put the filename into your
+    the justfile in your `main.just` and put the filename into your
     `.gitignore`.
 
 2.  Store it in another environment file. In your related justfile
