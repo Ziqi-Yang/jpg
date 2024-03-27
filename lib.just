@@ -17,10 +17,14 @@ jpg-create-dir dir:
 jpg-git-init dir:
     @git -C {{dir}} init
 
+[private, no-cd]
+@exit-when-path-exist path:
+    if [ -d '{{path}}' ]; then printf "Path '{{path}}' already exists!\n"; exit 1; fi
+
 # Create project NAME (copy template TEMPLATE-NAME and do builtin variables replacement)
 [no-cd]
-create name template-name: && (jpg-copy-template name template-name) (jpg-replace-builtin name)
-    if [ -d '{{name}}' ]; then printf "Directory '{{name}}' already exists!\n"; exit 1; fi
+create name template-name: (exit-when-path-exist name) \
+    && (jpg-copy-template name template-name) (jpg-replace-builtin name)
 
 # copy template TEMPLATE_NAME from 'JPG_TEMPLATES_DIR' to DIR directory
 [private, no-cd]
