@@ -1,8 +1,9 @@
 ::jpg.user.name::
 ::jpg.user.email::
+::jpg.proj.name::
+::jpg.path.root_dir::
 ::jpg.path.filename::
 ::jpg.path.filename#abs::
-::jpg.path.root_dir::
 ::jpg.path.basefilename::
 ::jpg.path.basefilename_noext::
 ::jpg.path.parent_dir::

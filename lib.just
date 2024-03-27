@@ -31,6 +31,7 @@ jpg-replace-builtin dir:
     
     cd '{{dir}}'      
     jpg__path__root_dir=$(pwd)
+    jpg__proj__name=$(basename "$jpg__path__root_dir")
     
     # TODO change to 'sd' when multiple find-replace feature is done
     # https://github.com/chmln/sd/issues/133
@@ -43,6 +44,7 @@ jpg-replace-builtin dir:
       sed -i \
         -e 's&{{JPG_S_USER_NAME}}&{{JPG_V_USER_NAME}}&g' \
         -e 's&{{JPG_S_USER_EMAIL}}&{{JPG_V_USER_EMAIL}}&g' \
+        -e 's&{{JPG_RS_PROJ_NAME}}&${jpg__proj__name}&g' \
         -e 's&{{JPG_RS_PATH_ROOT_DIR}}&${jpg__path__root_dir}&g' \
         -e \"s&{{JPG_RS_PATH_FILE_NAME}}&\${JPG_RS_PATH_FILE_NAME_REL}&g\" \
         -e 's&{{JPG_RS_PATH_FILE_NAME_ABS}}&{}&g' \

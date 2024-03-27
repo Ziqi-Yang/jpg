@@ -100,6 +100,6 @@ uninstall: && uninstall_completion
 # Run test
 test: && (jpg-replace-builtin "test")
     rm -rf ./test
-    cp -r ./test_template ./test
+    cp -r ./example/template ./test
     
 
