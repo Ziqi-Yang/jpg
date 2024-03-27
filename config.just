@@ -9,8 +9,8 @@ JPG_TEMP_BEGIN_SYM := "::"
 JPG_TEMP_END_SYM := "::"
 
 # Value for static slot
-JPG_V_USER_NAME := env("JPG_V_USER", `git config user.name || echo ""`)
-JPG_V_USER_EMAIL := env("JPG_V_EMAIL", `git config user.email || echo ""`)
+JPG_V_AUTHOR_NAME := env("JPG_V_USER", `git config user.name || echo ""`)
+JPG_V_AUTHOR_EMAIL := env("JPG_V_EMAIL", `git config user.email || echo ""`)
 
 # Display configuration information (default print all customizable configurations; '-a' to print all JPG variables; variable name to print its value)
 config a0="":

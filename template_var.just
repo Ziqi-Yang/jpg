@@ -1,7 +1,7 @@
 # `fd` first interprets '{{' as '{'
 # Static Slot
-JPG_S_USER_NAME := JPG_TEMP_BEGIN_SYM + "jpg.user.name" + JPG_TEMP_END_SYM
-JPG_S_USER_EMAIL := JPG_TEMP_BEGIN_SYM + "jpg.user.email" + JPG_TEMP_END_SYM
+JPG_S_AUTHOR_NAME := JPG_TEMP_BEGIN_SYM + "jpg.author.name" + JPG_TEMP_END_SYM
+JPG_S_AUTHOR_EMAIL := JPG_TEMP_BEGIN_SYM + "jpg.author.email" + JPG_TEMP_END_SYM
 
 
 # Runtime Slot - Value assigned at Runtime ==================================

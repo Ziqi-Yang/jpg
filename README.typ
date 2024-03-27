@@ -1,4 +1,3 @@
-
 = Just a Project Generator
 
 *Alpha State*
@@ -11,9 +10,15 @@ and shell script (However, `just` let you run script using many other languages)
 == Features
 
 1. fully customizable
-2. ridiculously simple
+2. simple and there is no extra grammar you need to learn (if you use `just` and write shell script)
 3. shell completion support
-4. use languages and tools you like
+4. use languages and tools you know and you like (e.g. #link("https://github.com/cargo-generate/cargo-generate")[cargo-generate] for rust project)
+
+== Limitations
+
++ Runtime variables (like current filename, current parent directory name) are not shareable. You need to regain and process the variable values though command `fd -t f -x sh -c "echo '{}'"` or something else. However, if you do want to do this stuff, remember the replacement of text has order, so you can write functions like `::foo(::jpg.author.name::)::`. However, it's quite limited.
+
++ Don't support control flow and functions in templates. You are encouraged to process variables in your justfile. If you want to have those advanced stuffs, it's recommended to use other tools like #link("https://github.com/mattrobenolt/jinja2-cli")[jinja2-cli] to pre-process template first in your justfile recipe. In this case, you can think JPG is just a command runner. 
 
 == Installation
 
@@ -57,21 +62,40 @@ functions defined defined in #link("./lib.just")[lib.just] file.
 
 == Utility Tools
 
-- #link("https://github.com/sharkdp/fd")[fd]
-- #link("https://github.com/chmln/sd")[sd]
-- #link("https://github.com/BurntSushi/ripgrep")[ripgrep]
+- #link("https://github.com/sharkdp/fd")[fd]: A simple, fast and user-friendly alternative to 'find'.
+- #link("https://github.com/chmln/sd")[sd]: Intuitive find & replace CLI (sed alternative).
+- #link("https://github.com/BurntSushi/ripgrep")[ripgrep]: ripgrep recursively searches directories for a regex pattern while respecting your gitignore.
+- #link("https://github.com/mattrobenolt/jinja2-cli")[jinja2-cli]: CLI for Jinja2.
+- #link("https://github.com/junegunn/fzf")[fzf]: 🌸 A command-line fuzzy finder.
+
+=== Easy to use TUI libraries
+
+If you write your justfile recipe in languages like `python`, `golang`, etc. You may want to use these TUI libraries:
++ #link("https://github.com/Textualize/rich")[rich] `python`
++ #link("https://github.com/charmbracelet/bubbletea")[bubbletea] `golang`
 
 == FAQ
 
-=== How can I create template and share it with others?
+=== How can share my template with others?
 
-+ Upload your template to an online open source project hosting service.
-+ Share your corresponding `just` recipe. \
++ Upload your template to an online open source project hosting service. (it's better to name it using `jpg-` prefix).
++ Share your corresponding justfile recipe. \
   Example recipe:
   ```just
   python name: && (jpg-replace-builtin name)
       git clone https://github.com/Ziqi-Yang/jpg.git name
   ```
+  Or you can share your justfile (only with the related parts). Others can import it.
+
+=== I don't want to store my secret in `~/.config/jpg/config` file. Where should I store my secret?
+Suppose you have make a git repo for synchronize your templates. Since `config` file is also used to change the values of JPG variables, it's not recommended to store your secrets. There are possibly two approaches:
++ create another justfile to store your secrets into variables, import the justfile in your `script.just` and put the filename into your `.gitignore`.
++ Store it in another environment file. In your related justfile recipes, write this: \
+    ```just
+    a:
+      #!/usr/bin/env sh
+      source <path>/.env
+    ```
 
 === Why JPG uses `::variable_name::` as its builtin template style, instead of something like `{{variable_name}}`?
 

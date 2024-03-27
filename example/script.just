@@ -1,10 +1,14 @@
 # Currently we needs to set `no-cd` attribute to all the recipes,
 #   See https://github.com/casey/just/issues/1978
 
-# execution order explain: jpg-copy-template -> python -> jpg-replace-builtin
+[private, no-cd]
+@done:
+    echo "done!"
+
+# execution order explain: create -> python -> done
 # Docs String
 [no-cd]
-python name: (jpg-copy-template name "python") && (jpg-replace-builtin name)
+python name: (create name "python") && done
     #!/usr/bin/env sh
     # use 'set -eux' to print the steps
     set -eu

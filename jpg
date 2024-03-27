@@ -25,4 +25,3 @@ _JPG_VERSION := "0.1.0"
 # Display version information
 @version:
     echo '{{_JPG_VERSION}}'
-    

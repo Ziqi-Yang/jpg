@@ -1,5 +1,5 @@
-::jpg.user.name::
-::jpg.user.email::
+::jpg.author.name::
+::jpg.author.email::
 ::jpg.proj.name::
 ::jpg.path.root_dir::
 ::jpg.path.filename::

@@ -17,10 +17,20 @@ jpg-create-dir dir:
 jpg-git-init dir:
     @git -C {{dir}} init
 
+# Create project NAME (copy template TEMPLATE-NAME and do builtin variables replacement)
+[no-cd]
+create name template-name: && (jpg-copy-template name template-name) (jpg-replace-builtin name)
+    if [ -d '{{name}}' ]; then printf "Directory '{{name}}' already exists!\n"; exit 1; fi
+
 # copy template TEMPLATE_NAME from 'JPG_TEMPLATES_DIR' to DIR directory
 [private, no-cd]
 jpg-copy-template dir template-name:
     cp -r '{{join(JPG_TEMPLATES_DIR, template-name)}}' '{{dir}}'
+
+# copy contents of template TEMPLATE_NAME from 'JPG_TEMPLATES_DIR' to DIR directory
+[private, no-cd]
+jpg-copy-template-contents dir template-name:
+    cp -rT '{{join(JPG_TEMPLATES_DIR, template-name)}}' '{{dir}}'
 
 # replace JPG's builtin variables for all files indie DIR
 [private, no-cd]
@@ -42,8 +52,8 @@ jpg-replace-builtin dir:
       JPG_RS_PATH_PARENT_DIR_REL=\$(realpath -s --relative-base=${jpg__path__root_dir} '{//}')
 
       sed -i \
-        -e 's&{{JPG_S_USER_NAME}}&{{JPG_V_USER_NAME}}&g' \
-        -e 's&{{JPG_S_USER_EMAIL}}&{{JPG_V_USER_EMAIL}}&g' \
+        -e 's&{{JPG_S_AUTHOR_NAME}}&{{JPG_V_AUTHOR_NAME}}&g' \
+        -e 's&{{JPG_S_AUTHOR_EMAIL}}&{{JPG_V_AUTHOR_EMAIL}}&g' \
         -e 's&{{JPG_RS_PROJ_NAME}}&${jpg__proj__name}&g' \
         -e 's&{{JPG_RS_PATH_ROOT_DIR}}&${jpg__path__root_dir}&g' \
         -e \"s&{{JPG_RS_PATH_FILE_NAME}}&\${JPG_RS_PATH_FILE_NAME_REL}&g\" \
