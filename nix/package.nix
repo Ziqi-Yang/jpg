@@ -2,6 +2,7 @@
 { lib
 , stdenv
 , just
+, installShellFiles
 }: let
   fs = lib.fileset;
   sourceFiles = fs.unions [
@@ -13,21 +14,23 @@
     ../config.just
     ../completions
     ../LICENSE
+    ../completions
   ];
-in
-stdenv.mkDerivation {
+in stdenv.mkDerivation {
   name = "jpg";
   src = fs.toSource {
     root = ../.;
     fileset = sourceFiles;
   };
   
-  nativeBuildInputs = [ just ];
+  propagatedBuildInputs = [ just ];
+  nativeBuildInputs = [ installShellFiles ];
   
   installPhase = ''
     runHook preInstall
 
-    just install
+    env NIXOS=1 PREFIX="$out" just install
+    installShellCompletion ./completions/jpg.{bash,fish,zsh}
 
     runHook postInstall
   '';

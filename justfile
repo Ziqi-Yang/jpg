@@ -7,8 +7,8 @@ JPG_USER_CONFIG_FILE_PATH := join(JPG_CONFIG_DIR, "config")
 
 # similar to `make install` 
 PREFIX := env("PREFIX", "/")
-BIN_DIR := join(PREFIX, "usr/bin")
-INSTALL_DIR := join(PREFIX, "usr/lib/jpg")
+BIN_DIR := join(PREFIX, if env("NIXOS", "") != "" {"bin"} else {"usr/bin"} )
+INSTALL_DIR := join(PREFIX, if env("NIXOS", "") != "" {"lib/jpg"} else {"usr/lib/jpg"} )
 INSTALL_EXAMPLE_DIR := join(INSTALL_DIR, "example")
 
 BASH_COMPLETION_DIR := env("BASH_COMPLETION_DIR", join(PREFIX, "usr/share/bash-completion/completions"))
@@ -17,6 +17,7 @@ FISH_COMPLETION_DIR := env("FISH_COMPLETION_DIR", join(PREFIX, "usr/share/fish/v
 
 [private]
 @__help:
+    echo "$PREFIX"
     just -l
 
 [private]
@@ -77,21 +78,20 @@ uninstall_completion:
 
 # TODO provide local install an uninstall
 
-# Install JPG
-install: && install_completion check-deps
+install:
     @echo '[*] Installing JPG'
+    install -d '{{BIN_DIR}}'
     install -d '{{INSTALL_DIR}}'
     install -d '{{INSTALL_EXAMPLE_DIR}}'
     install -Dm755 ./jpg '{{INSTALL_DIR}}'
     install -Dm644 ./*.just '{{INSTALL_DIR}}'
     install -Dm644 ./LICENSE '{{INSTALL_DIR}}'
-    cp -r ./example/* '{{INSTALL_EXAMPLE_DIR}}'
     # see issue: https://github.com/casey/just/issues/1977
     # ln -sf '{{join(INSTALL_DIR, "jpg")}}' '{{join(BIN_DIR, "jpg")}}'
     install -Dm755 ./jpg.sh '{{join(BIN_DIR, "jpg")}}'
 
 # uninstall JPG
-uninstall: && uninstall_completion
+uninstall:
     @echo '[*] Uninstalling JPG'
     @read -p "You will uninstall the JPG program at directory '{{INSTALL_DIR}}' [ENTER/Ctrl+C]"
     rm -rf '{{INSTALL_DIR}}'

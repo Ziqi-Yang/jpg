@@ -43,10 +43,13 @@ let you run script using many other languages).
 git clone https://github.com/Ziqi-Yang/jpg
 cd jpg
 sudo just install
+just install_completion
+just check-deps
 just create-example-user-configuration
 ```
 
-You can execute command `sudo just uninstall` to fully uninstall JPG.
+You can execute command `sudo just uninstall` (and
+`just uninstall_completion`) to uninstall JPG.
 
 ## Quick Run
 

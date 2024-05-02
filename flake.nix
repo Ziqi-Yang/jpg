@@ -14,7 +14,6 @@
       };
     });
   in {
-    # FIXME (mainly because the symbol link problem mentioned in jpg.sh)
     packages = forAllSystems ({ pkgs }: {
       default  = pkgs.callPackage ./nix/package.nix {};
     });
