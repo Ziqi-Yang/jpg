@@ -17,7 +17,6 @@ FISH_COMPLETION_DIR := env("FISH_COMPLETION_DIR", join(PREFIX, "usr/share/fish/v
 
 [private]
 @__help:
-    echo "$PREFIX"
     just -l
 
 [private]
