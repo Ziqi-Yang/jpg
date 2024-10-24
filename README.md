@@ -135,7 +135,7 @@ etc. You may want to use these TUI libraries:
 
 ### I don't want to store my secret in `~/.config/jpg/config` file. Where should I store my secret?
 
-Suppose you have make a git repo for synchronize your templates. Since
+Suppose you have make a git repo for synchronizing your templates. Since
 `config` file is also used to change the values of JPG variables, it's
 not recommended to store your secrets. There are possibly two
 approaches:
@@ -149,9 +149,9 @@ approaches:
 
     ``` just
     a:
-         #!/usr/bin/env sh
-         source <path>/.env
-       
+       #!/usr/bin/env sh
+       source <path>/.env
+     
     ```
 
 ### Why JPG uses `::variable_name::` as its builtin template style, instead of something like `{{variable_name}}`?
@@ -163,18 +163,17 @@ variables `JPG_TEMP_BEGIN_SYM` and `JPG_TEMP_END_SYM`.
 
 1.  collision with `just`'s templating style (i.e. `{{just_variable}}`).
     Also, currently `just` (1.25.2) will also interpret all `{{`
+    characters as variable start. So if JPG uses `{{variable_name}}`
+    style, then we needs to write stuffs like `{{{{variable_name}}}}`.
 
-characters as variable start. So if JPG uses `{{variable_name}}` style,
-then we needs to write stuffs like `{{{{variable_name}}}}`.
-
-1.  `jpg-replace-builtin` function uses `fd -x` (or `fd --exec`), and
+2.  `jpg-replace-builtin` function uses `fd -x` (or `fd --exec`), and
     `fd -x` will interpret `{{` as `{` (it's its own style of escaping
     `{` character).
 
-If JPG uses `{{variable_name}}` style, then combining with the first
-caveat, we need to write stuffs like `{{{{{{{{variable_name}}}}`
+3.  If JPG uses `{{variable_name}}` style, then combining with the first
+    caveat, we need to write stuffs like `{{{{{{{{variable_name}}}}`
 
-1.  Avoid collision with popular template languages like `jinja`.
+4.  Avoid collision with popular template languages like `jinja`.
 
 #### Why not `[[variable_name]]`
 

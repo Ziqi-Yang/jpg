@@ -9,10 +9,10 @@ and shell script (However, `just` let you run script using many other languages)
 
 == Features
 
-1. fully customizable
-2. simple and there is no extra grammar you need to learn (if you use `just` and write shell script)
-3. shell completion support
-4. use languages and tools you know and you like (e.g. #link("https://github.com/cargo-generate/cargo-generate")[cargo-generate] for rust project)
++ fully customizable
++ simple and there is no extra grammar you need to learn (if you use `just` and write shell script)
++ shell completion support
++ use languages and tools you know and you like (e.g. #link("https://github.com/cargo-generate/cargo-generate")[cargo-generate] for rust project)
 
 == Limitations
 
@@ -90,14 +90,19 @@ If you write your justfile recipe in languages like `python`, `golang`, etc. You
   Or you can share your justfile (only with the related parts). Others can import it.
 
 === I don't want to store my secret in `~/.config/jpg/config` file. Where should I store my secret?
-Suppose you have make a git repo for synchronize your templates. Since `config` file is also used to change the values of JPG variables, it's not recommended to store your secrets. There are possibly two approaches:
-+ create another justfile to store your secrets into variables, import the justfile in your `main.just` and put the filename into your `.gitignore`.
+
+Suppose you have make a git repo for synchronizing your templates. Since `config` file is
+also used to change the values of JPG variables, it's not recommended to store your
+secrets. There are possibly two approaches:
+
++ create another justfile to store your secrets into variables, import the justfile in
+  your `main.just` and put the filename into your `.gitignore`.
 + Store it in another environment file. In your related justfile recipes, write this: \
-    ```just
-    a:
-      #!/usr/bin/env sh
-      source <path>/.env
-    ```
+  ```just
+  a:
+    #!/usr/bin/env sh
+    source <path>/.env
+  ```
 
 === Why JPG uses `::variable_name::` as its builtin template style, instead of something like `{{variable_name}}`?
 
@@ -105,17 +110,23 @@ First pls note that you can change the builtin template style by setting variabl
 
 ==== Why not `{{variable_name}}`
 
-+ collision with `just`'s templating style (i.e. `{{just_variable}}`). Also, currently `just` (1.25.2) will also interpret all `{{`
-characters as variable start. So if JPG uses `{{variable_name}}` style, then we needs to write stuffs like `{{{{variable_name}}}}`.
++ collision with `just`'s templating style (i.e. `{{just_variable}}`). Also, currently
+  `just` (1.25.2) will also interpret all `{{` characters as variable start. So if JPG
+  uses `{{variable_name}}` style, then we needs to write stuffs like `{{{{variable_name}}}}`.
     
-+ `jpg-replace-builtin` function uses `fd -x` (or `fd --exec`), and `fd -x` will interpret `{{` as `{` (it's its own style of escaping `{` character).
-If JPG uses `{{variable_name}}` style, then combining with the first caveat, we need to write stuffs like `{{{{{{{{variable_name}}}}`
++ `jpg-replace-builtin` function uses `fd -x` (or `fd --exec`), and `fd -x` will interpret
+  `{{` as `{` (it's its own style of escaping `{` character).
+  
++ If JPG uses `{{variable_name}}` style, then combining with the first caveat, we need to
+  write stuffs like `{{{{{{{{variable_name}}}}`
+
 
 + Avoid collision with popular template languages like `jinja`.
 
 ==== Why not `[[variable_name]]`
 
-`jpg-replace-builtin` uses `sed` (and you may also want to use it), and `sed` can only handle regexp replacement, such that we need to escape `[`.
+`jpg-replace-builtin` uses `sed` (and you may also want to use it), and `sed` can only
+handle regexp replacement, such that we need to escape `[`.
 
 ==== Example Script File explaining the choose of different templating styles
 
