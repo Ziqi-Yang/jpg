@@ -39,7 +39,7 @@ default:
 
 Create your user files and template files at `~/.config/jpg/`.
 
-You can take https://codeberg.org/meow_king/my-jpg-templates as reference.
+You can take https://codeberg.org/meow_king/my-jpg-templates as a reference.
 
 == Usage
 
